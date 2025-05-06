@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - RLI Project</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red-bordeaux: #8f0000;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333333;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            background-color: var(--white);
+            color: var(--dark-gray);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .navbar {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: var(--dark-gray);
+            text-align: center;
+            padding: 12px 20px;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 14px;
+            transition: color 0.3s ease, background-color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: var(--red-bordeaux);
+            background-color: var(--light-gray);
+        }
+
+        .wrapper {
+            padding: 60px 20px 100px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: var(--red-bordeaux);
+            font-weight: 700;
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+            font-size: 2.5rem;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 4px;
+            background-color: var(--red-bordeaux);
+            border-radius: 2px;
+        }
+
+        h2 {
+            color: var(--dark-gray);
+            font-weight: 600;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+
+        h3 {
+            color: var(--red-bordeaux);
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .section {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(143, 0, 0, 0.15);
+        }
+
+        .team-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .team-member {
+            width: 300px;
+            text-align: center;
+            background-color: var(--light-gray);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .member-photo {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--red-bordeaux);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .member-photo:hover {
+            transform: scale(1.05);
+        }
+
+        .member-name {
+            font-weight: 700;
+            color: var(--red-bordeaux);
+            margin-bottom: 8px;
+            font-size: 1.3rem;
+        }
+
+        .member-role {
+            font-style: italic;
+            color: var(--dark-gray);
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .member-bio {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: var(--dark-gray);
+        }
+
+        .modbus-image {
+            max-width: 100%;
+            height: auto;
+            border: 3px solid var(--red-bordeaux);
+            border-radius: 8px;
+            margin: 20px 0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .modbus-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-caption {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        p, ul {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--dark-gray);
+        }
+
+        ul {
+            padding-left: 25px;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+        }
+
+        code {
+            background-color: var(--light-gray);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        .footer {
+            background-color: var(--red-bordeaux);
+            color: var(--white);
+            text-align: center;
+            padding: 20px 0;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            font-size: 0.9rem;
+            z-index: 1000;
+        }
+
+        @media (max-width: 768px) {
+            .wrapper {
+                padding: 30px 15px 80px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            h3 {
+                font-size: 1.2rem;
+            }
+
+            .navbar a {
+                padding: 10px 15px;
+                font-size: 13px;
+            }
+
+            .team-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .team-member {
+                width: 100%;
+                max-width: 340px;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .modbus-image {
+                margin: 15px 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            .member-photo {
+                width: 140px;
+                height: 140px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="Course.html">CAN Course</a>
+        <a href="aboutus.html">About us</a>
+        <a href="nodered.html">Demo Node-Red</a>
+    </div>
+
+        <div class="section">
+            <h2>Node-RED Modbus TCP/IP Flow</h2>
+            <p><strong>What is Node-RED?</strong> Node-RED is an open-source, flow-based programming tool built on Node.js, designed for wiring together hardware devices, APIs, and online services. Its visual editor allows users to create flows by connecting nodes, making it ideal for IoT, automation, and industrial applications like Modbus communication. In this project, Node-RED enables seamless Modbus TCP/IP interaction for industrial control simulations.</p>
+            <p>This project demonstrates Modbus TCP/IP communication between a client (master) and a server (slave) running on <code>localhost</code>, using the <code>node-red-contrib-modbus</code> package to simulate industrial control scenarios.</p>
+            <h3>Flow Description</h3>
+            <ul>
+                <li><strong>Modbus Server (Slave)</strong>: Listens on port <code>10502</code> with 1024 buffers for coils, input registers, and holding registers. It responds to client requests with a 100 ms delay to simulate realistic server behavior.</li>
+                <li><strong>Modbus Client (Master)</strong>: Connects to <code>localhost:10502</code> and performs two operations:
+                    <ul>
+                        <li><strong>Read (FC3)</strong>: Every 5 seconds, reads 4 holding registers starting at address 0, retrieving their current values.</li>
+                        <li><strong>Write (FC16)</strong>: Every 1 second, writes 3 random values (0–65535) to holding registers starting at address 0, updating the server’s state.</li>
+                    </ul>
+                </li>
+                <li><strong>Operation</strong>: The client writes random values to the server’s registers, which are read back in the next read cycle, demonstrating a complete communication loop. This setup mimics real-world industrial control systems.</li>
+            </ul>
+            <h3>Flow Diagram</h3>
+            <img src="assets/modbusflow.png" alt="Node-RED Modbus Flow Diagram" class="modbus-image">
+            <div class="image-caption">Node-RED flow diagram illustrating Modbus TCP/IP read and write operations.</div>
+            <h3>Output Example</h3>
+            <p>The output displays the values read from the holding registers and confirmation of write operations, visualized in the Node-RED interface. This shows the dynamic updating of register values over time.</p>
+            <img src="assets/modbusflow1.png" alt="Node-RED Modbus Output" class="modbus-image">
+            <div class="image-caption">Debug output showing register values from Modbus read and write operations.</div>
+        </div>
+    </div>
+
+    <div class="footer">
+        © 2025 RLI Project. All rights reserved.
+    </div>
+</body>
+</html>

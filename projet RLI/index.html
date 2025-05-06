@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RLI project</title>
+    <title>RLI Project - Modbus Frame Analyzer</title>
 
     <link
       rel="stylesheet"
@@ -11,7 +11,6 @@
     />
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" />
     <style>
-        /* Couleurs principales */
         :root {
             --red-bordeaux: #8f0000;
             --white: #ffffff;
@@ -29,7 +28,6 @@
             position: relative;
         }
 
-        /* Navbar stylisée */
         .navbar {
             background-color: var(--white);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -57,7 +55,6 @@
             background-color: transparent;
         }
 
-        /* Contenu principal */
         .wrapper {
             padding: 40px 20px 100px;
             max-width: 1200px;
@@ -90,7 +87,6 @@
             margin-bottom: 20px;
         }
 
-        /* Style des formulaires et boutons */
         .section {
             background-color: var(--light-gray);
             padding: 25px;
@@ -161,7 +157,6 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        /* Résultats */
         .result {
             margin-top: 20px;
             padding: 15px;
@@ -172,7 +167,6 @@
             border-radius: 4px;
         }
 
-        /* Footer */
         .footer {
             background-color: var(--red-bordeaux);
             color: var(--white);
@@ -186,18 +180,6 @@
             z-index: 1000;
         }
 
-        /* Animation de fond */
-        #canvas-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.1;
-        }
-
-        /* Responsive */
         @media (max-width: 768px) {
             .navbar a {
                 padding: 10px 15px;
@@ -219,12 +201,11 @@
     </style>
   </head>
   <body>
-    <canvas id="canvas-bg"></canvas>
     <div class="navbar">
         <a href="#">Home</a>
         <a href="Course.html">CAN Course</a>
         <a href="aboutus.html">About us</a>
-        <a href="#">Contact</a>
+        <a href="nodered.html">Demo Node-Red</a>
     </div>
     <div class="wrapper">
       <h1>MODBUS Frame Analyzer</h1>
@@ -243,11 +224,11 @@
               </div>
               <div>
                   <label for="asciiData">Data (Hex):</label>
-                  <input type="text" id="asciiData" placeholder="10000002">
+                  <input type="text" id="asciiData" placeholder="0064000A">
               </div>
           </div>
           <button onclick="constructAndVerifyASCII()">Construct & Verify ASCII Frame</button>
-          <div id="result5" class="result"></div>
+          <div id="resultAscii" class="result"></div>
       </div>
 
       <!-- MODBUS RTU Section -->
@@ -264,11 +245,11 @@
               </div>
               <div>
                   <label for="rtuData">Data (Hex):</label>
-                  <input type="text" id="rtuData" placeholder="10000002">
+                  <input type="text" id="rtuData" placeholder="0064000A">
               </div>
           </div>
           <button onclick="constructAndVerifyRTU()">Construct & Verify RTU Frame</button>
-          <div id="crcResult2" class="result"></div>
+          <div id="resultRTU" class="result"></div>
       </div>
 
       <!-- MODBUS TCP Section -->
@@ -293,11 +274,11 @@
               </div>
               <div>
                   <label for="tcpData">Data (Hex):</label>
-                  <input type="text" id="tcpData" placeholder="10000002">
+                  <input type="text" id="tcpData" placeholder="000A0005">
               </div>
           </div>
           <button onclick="constructAndVerifyTCP()">Construct & Verify TCP Frame</button>
-          <div id="result" class="result"></div>
+          <div id="resultTCP" class="result"></div>
       </div>
     </div>
 
@@ -306,11 +287,14 @@
     </div>
 
     <script>
-        // MODBUS CRC Calculation (for RTU and TCP)
+        // Valid Modbus function codes
+        const VALID_FUNCTION_CODES = [0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x0F, 0x10, 0x11];
+
+        // MODBUS CRC Calculation (for RTU)
         function calculateCRC(data) {
             let crc = 0xFFFF;
             for (let pos = 0; pos < data.length; pos++) {
-                crc ^= data[pos];
+                crc ^= data[pos] & 0xFF;
                 for (let i = 8; i !== 0; i--) {
                     if ((crc & 0x0001) !== 0) {
                         crc >>= 1;
@@ -327,7 +311,7 @@
         function calculateLRC(bytes) {
             let lrc = 0;
             for (const byte of bytes) {
-                lrc += byte;
+                lrc += byte & 0xFF;
             }
             lrc = (~lrc + 1) & 0xFF;
             return lrc;
@@ -336,6 +320,12 @@
         // Validate Hex Input
         function isValidHex(str) {
             return /^[0-9A-Fa-f]+$/.test(str);
+        }
+
+        // Validate Function Code
+        function isValidFunctionCode(code) {
+            const codeInt = parseInt(code, 16);
+            return VALID_FUNCTION_CODES.includes(codeInt);
         }
 
         // Convert Hex String to Bytes
@@ -347,12 +337,12 @@
             return bytes;
         }
 
-        // MODBUS ASCII Frame Construction and Verification
+        // MODBUS ASCII Frame Construction
         function constructAndVerifyASCII() {
             const slaveId = document.getElementById("asciiSlaveId").value.trim();
             const functionCode = document.getElementById("asciiFunctionCode").value.trim();
             const data = document.getElementById("asciiData").value.trim();
-            const resultDiv = document.getElementById("result5");
+            const resultDiv = document.getElementById("resultAscii");
 
             // Validate inputs
             if (!isValidHex(slaveId) || !isValidHex(functionCode) || !isValidHex(data)) {
@@ -363,15 +353,17 @@
                 resultDiv.innerHTML = "Invalid input: Slave ID and Function Code must be 1 byte (2 hex digits)";
                 return;
             }
-
-            // Construct frame content
-            const frameContent = slaveId.padStart(2, '0') + functionCode.padStart(2, '0') + data;
-            if (frameContent.length % 2 !== 0) {
+            if (!isValidFunctionCode(functionCode)) {
+                resultDiv.innerHTML = "Invalid Function Code: Must be one of 01, 02, 03, 04, 05, 06, 07, 08, 0F, 10, 11";
+                return;
+            }
+            if (data.length % 2 !== 0) {
                 resultDiv.innerHTML = "Invalid data length: Hex string must have even length";
                 return;
             }
 
-            // Convert to bytes
+            // Construct frame content
+            const frameContent = slaveId.padStart(2, '0') + functionCode.padStart(2, '0') + data;
             const bytes = hexToBytes(frameContent);
 
             // Calculate LRC
@@ -381,24 +373,22 @@
             // Construct full ASCII frame
             const asciiFrame = `:${frameContent}${lrcHex}\r\n`;
 
-            // Verify LRC
-            const contentBytes = hexToBytes(frameContent);
-            const calculatedLRC = calculateLRC(contentBytes);
-            const isValid = (calculatedLRC === lrc);
-
             resultDiv.innerHTML = `
-                Constructed Frame: ${asciiFrame}<br>
+                Frame: ${asciiFrame}<br>
+                Slave ID: 0x${slaveId.padStart(2, '0').toUpperCase()}<br>
+                Function Code: 0x${functionCode.padStart(2, '0').toUpperCase()}<br>
+                Data: 0x${data.toUpperCase()}<br>
                 Calculated LRC: 0x${lrcHex}<br>
-                ${isValid ? "LRC Matches! Valid frame." : "LRC Mismatch! Invalid frame."}
+                Status: Valid frame
             `;
         }
 
-        // MODBUS RTU Frame Construction and Verification
+        // MODBUS RTU Frame Construction
         function constructAndVerifyRTU() {
             const slaveId = document.getElementById("rtuSlaveId").value.trim();
             const functionCode = document.getElementById("rtuFunctionCode").value.trim();
             const data = document.getElementById("rtuData").value.trim();
-            const resultDiv = document.getElementById("crcResult2");
+            const resultDiv = document.getElementById("resultRTU");
 
             // Validate inputs
             if (!isValidHex(slaveId) || !isValidHex(functionCode) || !isValidHex(data)) {
@@ -409,12 +399,16 @@
                 resultDiv.innerHTML = "Invalid input: Slave ID and Function Code must be 1 byte (2 hex digits)";
                 return;
             }
+            if (!isValidFunctionCode(functionCode)) {
+                resultDiv.innerHTML = "Invalid Function Code: Must be one of 01, 02, 03, 04, 05, 06, 07, 08, 0F, 10, 11";
+                return;
+            }
             if (data.length % 2 !== 0) {
                 resultDiv.innerHTML = "Invalid data length: Hex string must have even length";
                 return;
             }
 
-            // Construct frame
+            // Construct frame without CRC
             const frameContent = slaveId.padStart(2, '0') + functionCode.padStart(2, '0') + data;
             const bytes = hexToBytes(frameContent);
 
@@ -422,31 +416,29 @@
             const crc = calculateCRC(bytes);
             const crcLow = crc & 0xFF;
             const crcHigh = (crc >> 8) & 0xFF;
+            const crcHex = crcLow.toString(16).padStart(2, '0') + crcHigh.toString(16).padStart(2, '0');
 
             // Construct full frame with CRC
-            const fullFrame = frameContent + crcLow.toString(16).padStart(2, '0') + crcHigh.toString(16).padStart(2, '0');
-
-            // Verify CRC
-            const frameBytes = hexToBytes(fullFrame);
-            const calculatedCRC = calculateCRC(frameBytes.slice(0, -2));
-            const isValid = (calculatedCRC === crc);
+            const fullFrame = frameContent + crcHex;
 
             resultDiv.innerHTML = `
-                Constructed Frame: ${fullFrame.toUpperCase()}<br>
-                Calculated CRC: 0x${crc.toString(16).toUpperCase().padStart(4, '0')}<br>
-                Frame CRC: 0x${crcHigh.toString(16).toUpperCase().padStart(2, '0')}${crcLow.toString(16).toUpperCase().padStart(2, '0')}<br>
-                ${isValid ? "CRC Matches! Valid frame." : "CRC Mismatch! Invalid frame."}
+                Frame: ${fullFrame.toUpperCase()}<br>
+                Slave ID: 0x${slaveId.padStart(2, '0').toUpperCase()}<br>
+                Function Code: 0x${functionCode.padStart(2, '0').toUpperCase()}<br>
+                Data: 0x${data.toUpperCase()}<br>
+                Calculated CRC: 0x${crcHex.toUpperCase()}<br>
+                Status: Valid frame
             `;
         }
 
-        // MODBUS TCP Frame Construction and Verification
+        // MODBUS TCP Frame Construction
         function constructAndVerifyTCP() {
             const transactionId = document.getElementById("tcpTransactionId").value.trim();
             const protocolId = document.getElementById("tcpProtocolId").value.trim();
             const unitId = document.getElementById("tcpUnitId").value.trim();
             const functionCode = document.getElementById("tcpFunctionCode").value.trim();
             const data = document.getElementById("tcpData").value.trim();
-            const resultDiv = document.getElementById("result");
+            const resultDiv = document.getElementById("resultTCP");
 
             // Validate inputs
             if (!isValidHex(transactionId) || !isValidHex(protocolId) || !isValidHex(unitId) || !isValidHex(functionCode) || !isValidHex(data)) {
@@ -455,6 +447,10 @@
             }
             if (transactionId.length > 4 || protocolId.length > 4 || unitId.length > 2 || functionCode.length > 2) {
                 resultDiv.innerHTML = "Invalid input: Check field lengths (Transaction/Protocol ID: 2 bytes, Unit ID/Function Code: 1 byte)";
+                return;
+            }
+            if (!isValidFunctionCode(functionCode)) {
+                resultDiv.innerHTML = "Invalid Function Code: Must be one of 01, 02, 03, 04, 05, 06, 07, 08, 0F, 10, 11";
                 return;
             }
             if (data.length % 2 !== 0) {
@@ -471,40 +467,20 @@
             const pdu = functionCode.padStart(2, '0') + data;
 
             // Full frame
-            const frameContent = mbapHeader + pdu;
-            const bytes = hexToBytes(frameContent);
+            const fullFrame = mbapHeader + pdu;
 
-            // Optionally calculate CRC
-            let crcInfo = "";
-            let isValid = true;
-            let fullFrame = frameContent;
-
-            // Add CRC for verification
-            const crc = calculateCRC(bytes);
-            const crcLow = crc & 0xFF;
-            const crcHigh = (crc >> 8) & 0xFF;
-            fullFrame += crcLow.toString(16).padStart(2, '0') + crcHigh.toString(16).padStart(2, '0');
-
-            // Verify CRC
-            const frameBytes = hexToBytes(fullFrame);
-            const calculatedCRC = calculateCRC(frameBytes.slice(0, -2));
-            isValid = (calculatedCRC === crc);
-
-            // Extract header info for display
-            const parsedTransactionId = parseInt(transactionId.padStart(4, '0'), 16);
-            const parsedProtocolId = parseInt(protocolId.padStart(4, '0'), 16);
-            const parsedUnitId = parseInt(unitId.padStart(2, '0'), 16);
-            const parsedFunctionCode = parseInt(functionCode.padStart(2, '0'), 16);
+            // Validate protocol ID (should be 0000 for Modbus)
+            const isValid = protocolId.padStart(4, '0').toUpperCase() === '0000';
 
             resultDiv.innerHTML = `
-                Constructed Frame: ${fullFrame.toUpperCase()}<br>
-                Transaction ID: 0x${parsedTransactionId.toString(16).padStart(4, '0').toUpperCase()}<br>
-                Protocol ID: 0x${parsedProtocolId.toString(16).padStart(4, '0').toUpperCase()}<br>
+                Frame: ${fullFrame.toUpperCase()}<br>
+                Transaction ID: 0x${transactionId.padStart(4, '0').toUpperCase()}<br>
+                Protocol ID: 0x${protocolId.padStart(4, '0').toUpperCase()}<br>
                 Length: ${dataLength} bytes<br>
-                Unit ID: 0x${parsedUnitId.toString(16).toUpperCase().padStart(2, '0')}<br>
-                Function Code: 0x${parsedFunctionCode.toString(16).toUpperCase().padStart(2, '0')}<br>
-                CRC: 0x${calculatedCRC.toString(16).padStart(4, '0').toUpperCase()} ${isValid ? "(Valid)" : "(Invalid)"}<br>
-                Status: ${isValid ? "Valid frame" : "Invalid frame"}
+                Unit ID: 0x${unitId.padStart(2, '0').toUpperCase()}<br>
+                Function Code: 0x${functionCode.padStart(2, '0').toUpperCase()}<br>
+                Data: 0x${data.toUpperCase()}<br>
+                Status: ${isValid ? "Valid frame (Protocol ID is 0000)." : "Invalid frame (Protocol ID must be 0000)."}
             `;
         }
 
