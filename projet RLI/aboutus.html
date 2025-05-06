@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - RLI Project</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Conservez le même style que votre page principale */
+        :root {
+            --red-bordeaux: #8f0000;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333333;
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            background-color: var(--white);
+            color: var(--dark-gray);
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: var(--dark-gray);
+            text-align: center;
+            padding: 12px 20px;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: var(--red-bordeaux);
+            background-color: transparent;
+        }
+
+        .wrapper {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: var(--red-bordeaux);
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: var(--red-bordeaux);
+        }
+
+        .team-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .team-member {
+            width: 280px;
+            text-align: center;
+            background-color: var(--light-gray);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+        }
+
+        .member-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--red-bordeaux);
+            margin-bottom: 20px;
+        }
+
+        .member-name {
+            font-weight: 700;
+            color: var(--red-bordeaux);
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+
+        .member-role {
+            font-style: italic;
+            color: var(--dark-gray);
+            margin-bottom: 15px;
+        }
+
+        .member-bio {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .footer {
+            background-color: var(--red-bordeaux);
+            color: var(--white);
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="#">CAN Course</a>
+        <a href="aboutus.html">About us</a>
+        <a href="#">Contact</a>
+    </div>
+
+    <div class="wrapper">
+        <h1>Our Team</h1>
+        
+        <div class="team-container">
+            <div class="team-member">
+                <img src="assets/ghadaa.png" alt="Ghada" class="member-photo">
+                <h3 class="member-name">Ghada Achour</h3>
+                <p class="member-role">Applied Computer Science Student</p>
+                <p class="member-bio">IA2.2</p>
+            </div>
+            
+            <!-- Membre 2 - Wejden -->
+            <div class="team-member">
+                <img src="assets/wejden.jpeg" alt="Wejden" class="member-photo">
+                <h3 class="member-name">Wejden Hattour</h3>
+                <p class="member-role">Applied Computer Science Student</p>
+                <p class="member-bio">IA2.2</p>
+            </div>
+            
+            <!-- Membre 3 - Dhafer -->
+            <div class="team-member">
+                <img src="assets/dhafer.jpeg" alt="Dhafer" class="member-photo">
+                <h3 class="member-name">Dhafer Romdhani</h3>
+                <p class="member-role">Applied Computer Science Student</p>
+                <p class="member-bio">IA2.2</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        &copy; 2025 RLI Project. All rights reserved.
+    </div>
+</body>
+</html>

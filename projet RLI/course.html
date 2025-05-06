@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MODBUS TCP/IP Course - RLI Project</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <style>
+        :root {
+            --red-bordeaux: #8f0000;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333333;
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            background-color: var(--white);
+            color: var(--dark-gray);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: var(--dark-gray);
+            text-align: center;
+            padding: 12px 20px;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: var(--red-bordeaux);
+            background-color: transparent;
+        }
+
+        .wrapper {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1, h2, h3 {
+            color: var(--red-bordeaux);
+            font-weight: 700;
+            margin-top: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 40px;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: var(--red-bordeaux);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .comparison-table th {
+            background-color: var(--red-bordeaux);
+            color: white;
+            font-weight: 600;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .comparison-table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .protocol-card {
+            background: var(--light-gray);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .protocol-card h3 {
+            margin-top: 0;
+            border-bottom: 2px solid var(--red-bordeaux);
+            padding-bottom: 10px;
+        }
+
+        .footer {
+            background-color: var(--red-bordeaux);
+            color: var(--white);
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+
+        .diagram {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="course.html">CAN Course</a>
+        <a href="aboutus.html">About us</a>
+        <a href="#">Contact</a>
+    </div>
+
+    <div class="wrapper">
+        <h1>MODBUS TCP/IP Protocol Course</h1>
+        
+        <section id="modbus-overview">
+            <h2>Introduction to MODBUS</h2>
+            <p>MODBUS is a communication protocol developed by Modicon in 1979 for use with its programmable logic controllers (PLCs). It has become a de facto standard communication protocol and is now commonly available for connecting industrial electronic devices.</p>
+            
+            <img src="assets/hh.png" alt="MODBUS Architecture" class="diagram">
+        </section>
+
+        <section id="protocol-comparison">
+            <h2>MODBUS Protocol Variants Comparison</h2>
+            <p>The MODBUS protocol has three main variants, each with specific characteristics and use cases:</p>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>MODBUS ASCII</th>
+                        <th>MODBUS RTU</th>
+                        <th>MODBUS TCP/IP</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Transmission Mode</td>
+                        <td>ASCII characters</td>
+                        <td>Binary</td>
+                        <td>TCP/IP packets</td>
+                    </tr>
+                    <tr>
+                        <td>Speed</td>
+                        <td>Slowest</td>
+                        <td>Fast</td>
+                        <td>Fastest (network dependent)</td>
+                    </tr>
+                    <tr>
+                        <td>Error Checking</td>
+                        <td>LRC (Longitudinal Redundancy Check)</td>
+                        <td>CRC (Cyclic Redundancy Check)</td>
+                        <td>TCP/IP checksums</td>
+                    </tr>
+                    <tr>
+                        <td>Maximum Devices</td>
+                        <td>247</td>
+                        <td>247</td>
+                        <td>Unlimited (theoretically)</td>
+                    </tr>
+                    <tr>
+                        <td>Distance</td>
+                        <td>Up to 1200m</td>
+                        <td>Up to 1200m</td>
+                        <td>Network dependent (global via internet)</td>
+                    </tr>
+                    <tr>
+                        <td>Typical Use Case</td>
+                        <td>Legacy systems, text-based debugging</td>
+                        <td>Industrial automation (most common)</td>
+                        <td>Networked systems, SCADA</td>
+                    </tr>
+                    <tr>
+                        <td>Port Requirements</td>
+                        <td>Serial port (RS-232/RS-485)</td>
+                        <td>Serial port (RS-232/RS-485)</td>
+                        <td>Ethernet port (TCP port 502)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="protocol-details">
+            <h2>Detailed Protocol Specifications</h2>
+            
+            <div class="protocol-card">
+                <h3>MODBUS ASCII</h3>
+                <p><strong>Frame Format:</strong> Each byte is sent as two ASCII characters (0-9, A-F)</p>
+                <p><strong>Start/End:</strong> Begins with ':' and ends with CR/LF</p>
+                <p><strong>Example:</strong> :010300000001FB\r\n</p>
+                <p><strong>Advantages:</strong> Human-readable, easy to debug, works well with text terminals</p>
+                <p><strong>Disadvantages:</strong> Inefficient (twice as many bytes as RTU), slower transmission</p>
+            </div>
+            
+            <div class="protocol-card">
+                <h3>MODBUS RTU</h3>
+                <p><strong>Frame Format:</strong> Binary data (most compact representation)</p>
+                <p><strong>Start/End:</strong> Silent interval of at least 3.5 character times</p>
+                <p><strong>Example:</strong> [01][03][00][00][00][01][84][0A] (hexadecimal bytes)</p>
+                <p><strong>Advantages:</strong> Efficient, fast, widely supported in industrial devices</p>
+                <p><strong>Disadvantages:</strong> Requires precise timing, not human-readable</p>
+            </div>
+            
+            <div class="protocol-card">
+                <h3>MODBUS TCP/IP</h3>
+                <p><strong>Frame Format:</strong> MODBUS PDU wrapped in TCP/IP packet with MBAP header</p>
+                <p><strong>Port:</strong> Default TCP port 502</p>
+                <p><strong>Example:</strong> [00][01][00][00][00][06][01][03][00][00][00][01]</p>
+                <p><strong>Advantages:</strong> Uses standard network infrastructure, no distance limitations, easy integration with IT systems</p>
+                <p><strong>Disadvantages:</strong> Requires network infrastructure, potential security concerns</p>
+            </div>
+        </section>
+
+        <section id="tcpip-details">
+            <h2>MODBUS TCP/IP Deep Dive</h2>
+            <p>MODBUS TCP/IP is essentially the MODBUS RTU protocol with a TCP/IP interface running on Ethernet. The key differences are:</p>
+            
+            <ul>
+                <li><strong>MBAP Header:</strong> 7-byte MODBUS Application Protocol header added to each message</li>
+                <li><strong>No CRC:</strong> Error checking handled by TCP/IP layer</li>
+                <li><strong>Unit Identifier:</strong> Used to identify slave devices behind a gateway</li>
+                <li><strong>Transaction Identifier:</strong> Allows matching requests with responses</li>
+            </ul>
+            
+            <h3>MODBUS TCP/IP Frame Structure</h3>
+            <pre>
+| Transaction ID | Protocol ID | Length | Unit ID | Function Code | Data |
+|----------------|-------------|--------|---------|---------------|------|
+| 2 bytes        | 2 bytes     | 2 bytes| 1 byte  | 1 byte        | N bytes |
+            </pre>
+            
+            <h3>Typical Communication Flow</h3>
+            <ol>
+                <li>Client establishes TCP connection to server (port 502)</li>
+                <li>Client sends MODBUS request with MBAP header</li>
+                <li>Server processes request and sends response with same transaction ID</li>
+                <li>Connection may be kept alive for multiple requests or closed</li>
+            </ol>
+        </section>
+    </div>
+
+    <div class="footer">
+        &copy; 2025 RLI Project. All rights reserved.
+    </div>
+</body>
+</html>
