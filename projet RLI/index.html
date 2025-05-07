@@ -11,515 +11,534 @@
     />
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" />
     <style>
-        :root {
-            --red-bordeaux: #8f0000;
-            --white: #ffffff;
-            --light-gray: #f5f5f5;
-            --dark-gray: #333333;
-        }
+      :root {
+        --red-bordeaux: #8f0000;
+        --white: #ffffff;
+        --light-gray: #f5f5f5;
+        --dark-gray: #333333;
+      }
 
-        body {
-            font-family: 'Raleway', sans-serif;
-            background-color: var(--white);
-            color: var(--dark-gray);
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            position: relative;
-        }
+      body {
+        font-family: 'Raleway', sans-serif;
+        background-color: var(--white);
+        color: var(--dark-gray);
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        position: relative;
+      }
 
-        .navbar {
-            background-color: var(--white);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 15px 0;
-            position: relative;
-            z-index: 1000;
-        }
+      .navbar {
+        background-color: var(--white);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 15px 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
 
+      .navbar a {
+        float: left;
+        display: block;
+        color: var(--dark-gray);
+        text-align: center;
+        padding: 12px 20px;
+        text-decoration: none;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 14px;
+        transition: color 0.3s ease, background-color 0.3s ease;
+      }
+
+      .navbar a:hover {
+        color: var(--red-bordeaux);
+        background-color: var(--light-gray);
+      }
+
+      .wrapper {
+        padding: 40px 20px 100px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        color: var(--red-bordeaux);
+        font-weight: 700;
+        margin-bottom: 30px;
+        position: relative;
+        padding-bottom: 10px;
+        text-align: center;
+        font-size: 2rem;
+      }
+
+      h1::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background-color: var(--red-bordeaux);
+      }
+
+      h2 {
+        color: var(--dark-gray);
+        font-weight: 600;
+        margin-bottom: 20px;
+        font-size: 1.5rem;
+      }
+
+      .section {
+        background-color: var(--light-gray);
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        margin-bottom: 30px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .section:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(143, 0, 0, 0.1);
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: var(--dark-gray);
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+        font-family: monospace;
+        transition: border 0.3s ease, box-shadow 0.3s ease;
+        margin-bottom: 10px;
+      }
+
+      input[type="text"]:focus {
+        border-color: var(--red-bordeaux);
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(143, 0, 0, 0.1);
+      }
+
+      .input-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      .input-group input {
+        flex: 1;
+        min-width: 120px;
+      }
+
+      button {
+        background-color: var(--red-bordeaux);
+        color: var(--white);
+        border: none;
+        padding: 12px 25px;
+        font-size: 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 15px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      button:hover {
+        background-color: #7a0000;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .result {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: var(--white);
+        border-left: 4px solid var(--red-bordeaux);
+        font-size: 16px;
+        font-family: monospace;
+        border-radius: 4px;
+        word-wrap: break-word;
+        max-height: 200px;
+        overflow-y: auto;
+      }
+
+      .error {
+        color: #d9534f;
+        font-weight: 600;
+      }
+
+      .footer {
+        background-color: var(--red-bordeaux);
+        color: var(--white);
+        text-align: center;
+        padding: 20px 0;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        font-size: 14px;
+        z-index: 1000;
+      }
+
+      @media (max-width: 768px) {
         .navbar a {
-            float: left;
-            display: block;
-            color: var(--dark-gray);
-            text-align: center;
-            padding: 12px 20px;
-            text-decoration: none;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 14px;
-            transition: all 0.3s ease;
+          padding: 10px 15px;
+          font-size: 13px;
         }
-
-        .navbar a:hover {
-            color: var(--red-bordeaux);
-            background-color: transparent;
-        }
-
+        
         .wrapper {
-            padding: 40px 20px 100px;
-            max-width: 1200px;
-            margin: 0 auto;
+          padding: 20px 15px 80px;
         }
-
+        
         h1 {
-            color: var(--red-bordeaux);
-            font-weight: 700;
-            margin-bottom: 30px;
-            position: relative;
-            padding-bottom: 10px;
-            text-align: center;
-        }
-
-        h1::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 3px;
-            background-color: var(--red-bordeaux);
+          font-size: 1.5rem;
         }
 
         h2 {
-            color: var(--dark-gray);
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-
-        .section {
-            background-color: var(--light-gray);
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            margin-bottom: 30px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(143, 0, 0, 0.1);
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--dark-gray);
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-            font-family: monospace;
-            transition: border 0.3s ease;
-            margin-bottom: 10px;
-        }
-
-        input[type="text"]:focus {
-            border-color: var(--red-bordeaux);
-            outline: none;
-            box-shadow: 0 0 0 2px rgba(143, 0, 0, 0.1);
+          font-size: 1.2rem;
         }
 
         .input-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .input-group input {
-            flex: 1;
-            min-width: 120px;
-        }
-
-        button {
-            background-color: var(--red-bordeaux);
-            color: var(--white);
-            border: none;
-            padding: 12px 25px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 15px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        button:hover {
-            background-color: #7a0000;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          flex-direction: column;
         }
 
         .result {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: var(--white);
-            border-left: 4px solid var(--red-bordeaux);
-            font-size: 16px;
-            font-family: monospace;
-            border-radius: 4px;
+          max-height: 150px;
         }
-
-        .footer {
-            background-color: var(--red-bordeaux);
-            color: var(--white);
-            text-align: center;
-            padding: 20px 0;
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            font-size: 14px;
-            z-index: 1000;
-        }
-
-        @media (max-width: 768px) {
-            .navbar a {
-                padding: 10px 15px;
-                font-size: 13px;
-            }
-            
-            .wrapper {
-                padding: 20px 15px 80px;
-            }
-            
-            h1 {
-                font-size: 24px;
-            }
-
-            .input-group {
-                flex-direction: column;
-            }
-        }
+      }
     </style>
   </head>
   <body>
     <div class="navbar">
-        <a href="#">Home</a>
-        <a href="Course.html">CAN Course</a>
-        <a href="aboutus.html">About us</a>
-        <a href="nodered.html">Demo Node-Red</a>
+      <a href="#">Home</a>
+      <a href="Course.html">CAN Course</a>
+      <a href="aboutus.html">About us</a>
+      <a href="nodered.html">Demo Node-Red</a>
     </div>
     <div class="wrapper">
       <h1>MODBUS Frame Analyzer</h1>
 
       <!-- MODBUS ASCII Section -->
       <div class="section">
-          <h2>MODBUS ASCII</h2>
-          <div class="input-group">
-              <div>
-                  <label for="asciiSlaveId">Slave ID (Hex):</label>
-                  <input type="text" id="asciiSlaveId" placeholder="01">
-              </div>
-              <div>
-                  <label for="asciiFunctionCode">Function Code (Hex):</label>
-                  <input type="text" id="asciiFunctionCode" placeholder="03">
-              </div>
-              <div>
-                  <label for="asciiData">Data (Hex):</label>
-                  <input type="text" id="asciiData" placeholder="0064000A">
-              </div>
+        <h2>MODBUS ASCII</h2>
+        <div class="input-group">
+          <div>
+            <label for="asciiSlaveId">Slave ID (Hex):</label>
+            <input type="text" id="asciiSlaveId" placeholder="01" maxlength="2">
           </div>
-          <button onclick="constructAndVerifyASCII()">Construct & Verify ASCII Frame</button>
-          <div id="resultAscii" class="result"></div>
+          <div>
+            <label for="asciiFunctionCode">Function Code (Hex):</label>
+            <input type="text" id="asciiFunctionCode" placeholder="03" maxlength="2">
+          </div>
+          <div>
+            <label for="asciiData">Data (Hex):</label>
+            <input type="text" id="asciiData" placeholder="0064000A">
+          </div>
+        </div>
+        <button onclick="constructAndVerifyASCII()">Construct & Verify ASCII Frame</button>
+        <div id="resultAscii" class="result"></div>
       </div>
 
       <!-- MODBUS RTU Section -->
       <div class="section">
-          <h2>MODBUS RTU</h2>
-          <div class="input-group">
-              <div>
-                  <label for="rtuSlaveId">Slave ID (Hex):</label>
-                  <input type="text" id="rtuSlaveId" placeholder="01">
-              </div>
-              <div>
-                  <label for="rtuFunctionCode">Function Code (Hex):</label>
-                  <input type="text" id="rtuFunctionCode" placeholder="03">
-              </div>
-              <div>
-                  <label for="rtuData">Data (Hex):</label>
-                  <input type="text" id="rtuData" placeholder="0064000A">
-              </div>
+        <h2>MODBUS RTU</h2>
+        <div class="input-group">
+          <div>
+            <label for="rtuSlaveId">Slave ID (Hex):</label>
+            <input type="text" id="rtuSlaveId" placeholder="01" maxlength="2">
           </div>
-          <button onclick="constructAndVerifyRTU()">Construct & Verify RTU Frame</button>
-          <div id="resultRTU" class="result"></div>
+          <div>
+            <label for="rtuFunctionCode">Function Code (Hex):</label>
+            <input type="text" id="rtuFunctionCode" placeholder="03" maxlength="2">
+          </div>
+          <div>
+            <label for="rtuData">Data (Hex):</label>
+            <input type="text" id="rtuData" placeholder="0064000A">
+          </div>
+        </div>
+        <button onclick="constructAndVerifyRTU()">Construct & Verify RTU Frame</button>
+        <div id="resultRTU" class="result"></div>
       </div>
 
       <!-- MODBUS TCP Section -->
       <div class="section">
-          <h2>MODBUS TCP</h2>
-          <div class="input-group">
-              <div>
-                  <label for="tcpTransactionId">Transaction ID (Hex):</label>
-                  <input type="text" id="tcpTransactionId" placeholder="0001">
-              </div>
-              <div>
-                  <label for="tcpProtocolId">Protocol ID (Hex):</label>
-                  <input type="text" id="tcpProtocolId" placeholder="0000">
-              </div>
-              <div>
-                  <label for="tcpUnitId">Unit ID (Hex):</label>
-                  <input type="text" id="tcpUnitId" placeholder="01">
-              </div>
-              <div>
-                  <label for="tcpFunctionCode">Function Code (Hex):</label>
-                  <input type="text" id="tcpFunctionCode" placeholder="03">
-              </div>
-              <div>
-                  <label for="tcpData">Data (Hex):</label>
-                  <input type="text" id="tcpData" placeholder="000A0005">
-              </div>
+        <h2>MODBUS TCP</h2>
+        <div class="input-group">
+          <div>
+            <label for="tcpTransactionId">Transaction ID (Hex):</label>
+            <input type="text" id="tcpTransactionId" placeholder="0001" maxlength="4">
           </div>
-          <button onclick="constructAndVerifyTCP()">Construct & Verify TCP Frame</button>
-          <div id="resultTCP" class="result"></div>
+          <div>
+            <label for="tcpProtocolId">Protocol ID (Hex):</label>
+            <input type="text" id="tcpProtocolId" placeholder="0000" maxlength="4">
+          </div>
+          <div>
+            <label for="tcpUnitId">Unit ID (Hex):</label>
+            <input type="text" id="tcpUnitId" placeholder="01" maxlength="2">
+          </div>
+          <div>
+            <label for="tcpFunctionCode">Function Code (Hex):</label>
+            <input type="text" id="tcpFunctionCode" placeholder="03" maxlength="2">
+          </div>
+          <div>
+            <label for="tcpData">Data (Hex):</label>
+            <input type="text" id="tcpData" placeholder="000A0005">
+          </div>
+        </div>
+        <button onclick="constructAndVerifyTCP()">Construct & Verify TCP Frame</button>
+        <div id="resultTCP" class="result"></div>
       </div>
     </div>
 
     <div class="footer">
-        <p>© 2025 RLI Project. All rights reserved.</p>
+      <p>© 2025 RLI Project. All rights reserved.</p>
     </div>
 
     <script>
-        // Valid Modbus function codes
-        const VALID_FUNCTION_CODES = [0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x0F, 0x10, 0x11];
+      // Valid Modbus function codes
+      const VALID_FUNCTION_CODES = [0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x0F, 0x10, 0x11];
 
-        // MODBUS CRC Calculation (for RTU)
-        function calculateCRC(data) {
-            let crc = 0xFFFF;
-            for (let pos = 0; pos < data.length; pos++) {
-                crc ^= data[pos] & 0xFF;
-                for (let i = 8; i !== 0; i--) {
-                    if ((crc & 0x0001) !== 0) {
-                        crc >>= 1;
-                        crc ^= 0xA001;
-                    } else {
-                        crc >>= 1;
-                    }
-                }
+      // MODBUS CRC Calculation (for RTU)
+      function calculateCRC(data) {
+        let crc = 0xFFFF;
+        for (let pos = 0; pos < data.length; pos++) {
+          crc ^= data[pos] & 0xFF;
+          for (let i = 8; i !== 0; i--) {
+            if ((crc & 0x0001) !== 0) {
+              crc >>= 1;
+              crc ^= 0xA001;
+            } else {
+              crc >>= 1;
             }
-            return crc;
+          }
+        }
+        return crc;
+      }
+
+      // MODBUS LRC Calculation (for ASCII)
+      function calculateLRC(bytes) {
+        let lrc = 0;
+        for (const byte of bytes) {
+          lrc += byte & 0xFF;
+        }
+        lrc = (~lrc + 1) & 0xFF;
+        return lrc;
+      }
+
+      // Validate Hex Input
+      function isValidHex(str) {
+        return /^[0-9A-Fa-f]+$/.test(str);
+      }
+
+      // Validate Function Code
+      function isValidFunctionCode(code) {
+        const codeInt = parseInt(code, 16);
+        return VALID_FUNCTION_CODES.includes(codeInt);
+      }
+
+      // Convert Hex String to Bytes
+      function hexToBytes(hex) {
+        let bytes = [];
+        for (let i = 0; i < hex.length; i += 2) {
+          bytes.push(parseInt(hex.substr(i, 2), 16));
+        }
+        return bytes;
+      }
+
+      // MODBUS ASCII Frame Construction
+      function constructAndVerifyASCII() {
+        const slaveId = document.getElementById("asciiSlaveId").value.trim();
+        const functionCode = document.getElementById("asciiFunctionCode").value.trim();
+        const data = document.getElementById("asciiData").value.trim();
+        const resultDiv = document.getElementById("resultAscii");
+
+        // Validate inputs
+        if (!isValidHex(slaveId) || !isValidHex(functionCode) || !isValidHex(data)) {
+          resultDiv.innerHTML = '<span class="error">Invalid input: All fields must contain valid hex digits</span>';
+          return;
+        }
+        if (slaveId.length > 2 || functionCode.length > 2) {
+          resultDiv.innerHTML = '<span class="error">Invalid input: Slave ID and Function Code must be 1 byte (2 hex digits)</span>';
+          return;
+        }
+        if (!isValidFunctionCode(functionCode)) {
+          resultDiv.innerHTML = '<span class="error">Invalid Function Code: Must be one of 01, 02, 03, 04, 05, 06, 07, 08, 0F, 10, 11</span>';
+          return;
+        }
+        if (data.length % 2 !== 0) {
+          resultDiv.innerHTML = '<span class="error">Invalid data length: Hex string must have even length</span>';
+          return;
         }
 
-        // MODBUS LRC Calculation (for ASCII)
-        function calculateLRC(bytes) {
-            let lrc = 0;
-            for (const byte of bytes) {
-                lrc += byte & 0xFF;
-            }
-            lrc = (~lrc + 1) & 0xFF;
-            return lrc;
+        // Construct frame content
+        const frameContent = slaveId.padStart(2, '0') + functionCode.padStart(2, '0') + data;
+        const bytes = hexToBytes(frameContent);
+
+        // Calculate LRC
+        const lrc = calculateLRC(bytes);
+        const lrcHex = lrc.toString(16).padStart(2, '0').toUpperCase();
+
+        // Construct full ASCII frame
+        const asciiFrame = `:${frameContent}${lrcHex}\r\n`;
+
+        resultDiv.innerHTML = `
+          Frame: ${asciiFrame}<br>
+          Slave ID: 0x${slaveId.padStart(2, '0').toUpperCase()}<br>
+          Function Code: 0x${functionCode.padStart(2, '0').toUpperCase()}<br>
+          Data: 0x${data.toUpperCase()}<br>
+          Calculated LRC: 0x${lrcHex}<br>
+          Status: Valid frame
+        `;
+      }
+
+      // MODBUS RTU Frame Construction
+      function constructAndVerifyRTU() {
+        const slaveId = document.getElementById("rtuSlaveId").value.trim();
+        const functionCode = document.getElementById("rtuFunctionCode").value.trim();
+        const data = document.getElementById("rtuData").value.trim();
+        const resultDiv = document.getElementById("resultRTU");
+
+        // Validate inputs
+        if (!isValidHex(slaveId) || !isValidHex(functionCode) || !isValidHex(data)) {
+          resultDiv.innerHTML = '<span class="error">Invalid input: All fields must contain valid hex digits</span>';
+          return;
+        }
+        if (slaveId.length > 2 || functionCode.length > 2) {
+          resultDiv.innerHTML = '<span class="error">Invalid input: Slave ID and Function Code must be 1 byte (2 hex digits)</span>';
+          return;
+        }
+        if (!isValidFunctionCode(functionCode)) {
+          resultDiv.innerHTML = '<span class="error">Invalid Function Code: Must be one of 01, 02, 03, 04, 05, 06, 07, 08, 0F, 10, 11</span>';
+          return;
+        }
+        if (data.length % 2 !== 0) {
+          resultDiv.innerHTML = '<span class="error">Invalid data length: Hex string must have even length</span>';
+          return;
         }
 
-        // Validate Hex Input
-        function isValidHex(str) {
-            return /^[0-9A-Fa-f]+$/.test(str);
+        // Construct frame without CRC
+        const frameContent = slaveId.padStart(2, '0') + functionCode.padStart(2, '0') + data;
+        const bytes = hexToBytes(frameContent);
+
+        // Calculate CRC
+        const crc = calculateCRC(bytes);
+        const crcLow = crc & 0xFF;
+        const crcHigh = (crc >> 8) & 0xFF;
+        const crcHex = crcLow.toString(16).padStart(2, '0') + crcHigh.toString(16).padStart(2, '0');
+
+        // Construct full frame with CRC
+        const fullFrame = frameContent + crcHex;
+
+        resultDiv.innerHTML = `
+          Frame: ${fullFrame.toUpperCase()}<br>
+          Slave ID: 0x${slaveId.padStart(2, '0').toUpperCase()}<br>
+          Function Code: 0x${functionCode.padStart(2, '0').toUpperCase()}<br>
+          Data: 0x${data.toUpperCase()}<br>
+          Calculated CRC: 0x${crcHex.toUpperCase()}<br>
+          Status: Valid frame
+        `;
+      }
+
+      // MODBUS TCP Frame Construction
+      function constructAndVerifyTCP() {
+        const transactionId = document.getElementById("tcpTransactionId").value.trim();
+        const protocolId = document.getElementById("tcpProtocolId").value.trim();
+        const unitId = document.getElementById("tcpUnitId").value.trim();
+        const functionCode = document.getElementById("tcpFunctionCode").value.trim();
+        const data = document.getElementById("tcpData").value.trim();
+        const resultDiv = document.getElementById("resultTCP");
+
+        // Validate inputs
+        if (!isValidHex(transactionId) || !isValidHex(protocolId) || !isValidHex(unitId) || !isValidHex(functionCode) || !isValidHex(data)) {
+          resultDiv.innerHTML = '<span class="error">Invalid input: All fields must contain valid hex digits</span>';
+          return;
+        }
+        if (transactionId.length > 4 || protocolId.length > 4 || unitId.length > 2 || functionCode.length > 2) {
+          resultDiv.innerHTML = '<span class="error">Invalid input: Check field lengths (Transaction/Protocol ID: 2 bytes, Unit ID/Function Code: 1 byte)</span>';
+          return;
+        }
+        if (!isValidFunctionCode(functionCode)) {
+          resultDiv.innerHTML = '<span class="error">Invalid Function Code: Must be one of 01, 02, 03, 04, 05, 06, 07, 08, 0F, 10, 11</span>';
+          return;
+        }
+        if (data.length % 2 !== 0) {
+          resultDiv.innerHTML = '<span class="error">Invalid data length: Hex string must have even length</span>';
+          return;
         }
 
-        // Validate Function Code
-        function isValidFunctionCode(code) {
-            const codeInt = parseInt(code, 16);
-            return VALID_FUNCTION_CODES.includes(codeInt);
-        }
+        // Construct MBAP header
+        const dataLength = (data.length / 2) + 2; // Function code + data
+        const lengthField = dataLength.toString(16).padStart(4, '0');
+        const mbapHeader = transactionId.padStart(4, '0') + protocolId.padStart(4, '0') + lengthField + unitId.padStart(2, '0');
 
-        // Convert Hex String to Bytes
-        function hexToBytes(hex) {
-            let bytes = [];
-            for (let i = 0; i < hex.length; i += 2) {
-                bytes.push(parseInt(hex.substr(i, 2), 16));
-            }
-            return bytes;
-        }
+        // Construct PDU
+        const pdu = functionCode.padStart(2, '0') + data;
 
-        // MODBUS ASCII Frame Construction
-        function constructAndVerifyASCII() {
-            const slaveId = document.getElementById("asciiSlaveId").value.trim();
-            const functionCode = document.getElementById("asciiFunctionCode").value.trim();
-            const data = document.getElementById("asciiData").value.trim();
-            const resultDiv = document.getElementById("resultAscii");
+        // Full frame
+        const fullFrame = mbapHeader + pdu;
 
-            // Validate inputs
-            if (!isValidHex(slaveId) || !isValidHex(functionCode) || !isValidHex(data)) {
-                resultDiv.innerHTML = "Invalid input: All fields must contain valid hex digits";
-                return;
-            }
-            if (slaveId.length > 2 || functionCode.length > 2) {
-                resultDiv.innerHTML = "Invalid input: Slave ID and Function Code must be 1 byte (2 hex digits)";
-                return;
-            }
-            if (!isValidFunctionCode(functionCode)) {
-                resultDiv.innerHTML = "Invalid Function Code: Must be one of 01, 02, 03, 04, 05, 06, 07, 08, 0F, 10, 11";
-                return;
-            }
-            if (data.length % 2 !== 0) {
-                resultDiv.innerHTML = "Invalid data length: Hex string must have even length";
-                return;
-            }
+        // Validate protocol ID (should be 0000 for Modbus)
+        const isValid = protocolId.padStart(4, '0').toUpperCase() === '0000';
 
-            // Construct frame content
-            const frameContent = slaveId.padStart(2, '0') + functionCode.padStart(2, '0') + data;
-            const bytes = hexToBytes(frameContent);
+        resultDiv.innerHTML = `
+          Frame: ${fullFrame.toUpperCase()}<br>
+          Transaction ID: 0x${transactionId.padStart(4, '0').toUpperCase()}<br>
+          Protocol ID: 0x${protocolId.padStart(4, '0').toUpperCase()}<br>
+          Length: ${dataLength} bytes<br>
+          Unit ID: 0x${unitId.padStart(2, '0').toUpperCase()}<br>
+          Function Code: 0x${functionCode.padStart(2, '0').toUpperCase()}<br>
+          Data: 0x${data.toUpperCase()}<br>
+          Status: ${isValid ? "Valid frame (Protocol ID is 0000)." : "Invalid frame (Protocol ID must be 0000)."}
+        `;
+      }
 
-            // Calculate LRC
-            const lrc = calculateLRC(bytes);
-            const lrcHex = lrc.toString(16).padStart(2, '0').toUpperCase();
-
-            // Construct full ASCII frame
-            const asciiFrame = `:${frameContent}${lrcHex}\r\n`;
-
-            resultDiv.innerHTML = `
-                Frame: ${asciiFrame}<br>
-                Slave ID: 0x${slaveId.padStart(2, '0').toUpperCase()}<br>
-                Function Code: 0x${functionCode.padStart(2, '0').toUpperCase()}<br>
-                Data: 0x${data.toUpperCase()}<br>
-                Calculated LRC: 0x${lrcHex}<br>
-                Status: Valid frame
-            `;
-        }
-
-        // MODBUS RTU Frame Construction
-        function constructAndVerifyRTU() {
-            const slaveId = document.getElementById("rtuSlaveId").value.trim();
-            const functionCode = document.getElementById("rtuFunctionCode").value.trim();
-            const data = document.getElementById("rtuData").value.trim();
-            const resultDiv = document.getElementById("resultRTU");
-
-            // Validate inputs
-            if (!isValidHex(slaveId) || !isValidHex(functionCode) || !isValidHex(data)) {
-                resultDiv.innerHTML = "Invalid input: All fields must contain valid hex digits";
-                return;
-            }
-            if (slaveId.length > 2 || functionCode.length > 2) {
-                resultDiv.innerHTML = "Invalid input: Slave ID and Function Code must be 1 byte (2 hex digits)";
-                return;
-            }
-            if (!isValidFunctionCode(functionCode)) {
-                resultDiv.innerHTML = "Invalid Function Code: Must be one of 01, 02, 03, 04, 05, 06, 07, 08, 0F, 10, 11";
-                return;
-            }
-            if (data.length % 2 !== 0) {
-                resultDiv.innerHTML = "Invalid data length: Hex string must have even length";
-                return;
-            }
-
-            // Construct frame without CRC
-            const frameContent = slaveId.padStart(2, '0') + functionCode.padStart(2, '0') + data;
-            const bytes = hexToBytes(frameContent);
-
-            // Calculate CRC
-            const crc = calculateCRC(bytes);
-            const crcLow = crc & 0xFF;
-            const crcHigh = (crc >> 8) & 0xFF;
-            const crcHex = crcLow.toString(16).padStart(2, '0') + crcHigh.toString(16).padStart(2, '0');
-
-            // Construct full frame with CRC
-            const fullFrame = frameContent + crcHex;
-
-            resultDiv.innerHTML = `
-                Frame: ${fullFrame.toUpperCase()}<br>
-                Slave ID: 0x${slaveId.padStart(2, '0').toUpperCase()}<br>
-                Function Code: 0x${functionCode.padStart(2, '0').toUpperCase()}<br>
-                Data: 0x${data.toUpperCase()}<br>
-                Calculated CRC: 0x${crcHex.toUpperCase()}<br>
-                Status: Valid frame
-            `;
-        }
-
-        // MODBUS TCP Frame Construction
-        function constructAndVerifyTCP() {
-            const transactionId = document.getElementById("tcpTransactionId").value.trim();
-            const protocolId = document.getElementById("tcpProtocolId").value.trim();
-            const unitId = document.getElementById("tcpUnitId").value.trim();
-            const functionCode = document.getElementById("tcpFunctionCode").value.trim();
-            const data = document.getElementById("tcpData").value.trim();
-            const resultDiv = document.getElementById("resultTCP");
-
-            // Validate inputs
-            if (!isValidHex(transactionId) || !isValidHex(protocolId) || !isValidHex(unitId) || !isValidHex(functionCode) || !isValidHex(data)) {
-                resultDiv.innerHTML = "Invalid input: All fields must contain valid hex digits";
-                return;
-            }
-            if (transactionId.length > 4 || protocolId.length > 4 || unitId.length > 2 || functionCode.length > 2) {
-                resultDiv.innerHTML = "Invalid input: Check field lengths (Transaction/Protocol ID: 2 bytes, Unit ID/Function Code: 1 byte)";
-                return;
-            }
-            if (!isValidFunctionCode(functionCode)) {
-                resultDiv.innerHTML = "Invalid Function Code: Must be one of 01, 02, 03, 04, 05, 06, 07, 08, 0F, 10, 11";
-                return;
-            }
-            if (data.length % 2 !== 0) {
-                resultDiv.innerHTML = "Invalid data length: Hex string must have even length";
-                return;
-            }
-
-            // Construct MBAP header
-            const dataLength = (data.length / 2) + 2; // Function code + data
-            const lengthField = dataLength.toString(16).padStart(4, '0');
-            const mbapHeader = transactionId.padStart(4, '0') + protocolId.padStart(4, '0') + lengthField + unitId.padStart(2, '0');
-
-            // Construct PDU
-            const pdu = functionCode.padStart(2, '0') + data;
-
-            // Full frame
-            const fullFrame = mbapHeader + pdu;
-
-            // Validate protocol ID (should be 0000 for Modbus)
-            const isValid = protocolId.padStart(4, '0').toUpperCase() === '0000';
-
-            resultDiv.innerHTML = `
-                Frame: ${fullFrame.toUpperCase()}<br>
-                Transaction ID: 0x${transactionId.padStart(4, '0').toUpperCase()}<br>
-                Protocol ID: 0x${protocolId.padStart(4, '0').toUpperCase()}<br>
-                Length: ${dataLength} bytes<br>
-                Unit ID: 0x${unitId.padStart(2, '0').toUpperCase()}<br>
-                Function Code: 0x${functionCode.padStart(2, '0').toUpperCase()}<br>
-                Data: 0x${data.toUpperCase()}<br>
-                Status: ${isValid ? "Valid frame (Protocol ID is 0000)." : "Invalid frame (Protocol ID must be 0000)."}
-            `;
-        }
-
-        // Attach event listeners
-        window.onload = function() {
-            document.getElementById('asciiSlaveId').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') constructAndVerifyASCII();
-            });
-            document.getElementById('asciiFunctionCode').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') constructAndVerifyASCII();
-            });
-            document.getElementById('asciiData').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') constructAndVerifyASCII();
-            });
-            document.getElementById('rtuSlaveId').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') constructAndVerifyRTU();
-            });
-            document.getElementById('rtuFunctionCode').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') constructAndVerifyRTU();
-            });
-            document.getElementById('rtuData').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') constructAndVerifyRTU();
-            });
-            document.getElementById('tcpTransactionId').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') constructAndVerifyTCP();
-            });
-            document.getElementById('tcpProtocolId').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') constructAndVerifyTCP();
-            });
-            document.getElementById('tcpUnitId').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') constructAndVerifyTCP();
-            });
-            document.getElementById('tcpFunctionCode').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') constructAndVerifyTCP();
-            });
-            document.getElementById('tcpData').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') constructAndVerifyTCP();
-            });
-        };
+      // Attach event listeners
+      window.onload = function() {
+        document.getElementById('asciiSlaveId').addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') constructAndVerifyASCII();
+        });
+        document.getElementById('asciiFunctionCode').addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') constructAndVerifyASCII();
+        });
+        document.getElementById('asciiData').addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') constructAndVerifyASCII();
+        });
+        document.getElementById('rtuSlaveId').addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') constructAndVerifyRTU();
+        });
+        document.getElementById('rtuFunctionCode').addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') constructAndVerifyRTU();
+        });
+        document.getElementById('rtuData').addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') constructAndVerifyRTU();
+        });
+        document.getElementById('tcpTransactionId').addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') constructAndVerifyTCP();
+        });
+        document.getElementById('tcpProtocolId').addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') constructAndVerifyTCP();
+        });
+        document.getElementById('tcpUnitId').addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') constructAndVerifyTCP();
+        });
+        document.getElementById('tcpFunctionCode').addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') constructAndVerifyTCP();
+        });
+        document.getElementById('tcpData').addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') constructAndVerifyTCP();
+        });
+      };
     </script>
   </body>
 </html>
