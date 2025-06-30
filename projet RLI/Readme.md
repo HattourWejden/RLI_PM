@@ -28,17 +28,13 @@ Création d’un site web interactif permettant la **saisie et le calcul automat
 
 ## 📸 Aperçu du projet
 
-### 💻 Interface Web
-
-![Interface web](assets/interface_web.png)
 
 ### 🧮 Calcul du CRC et LRC
-![Construire une Trame](assets/constructModbus.png)
-![Calcul CRC](assets/calcul_crc.png)
 ![Calcul LRC](assets/calcul_lrc.png)
+![Calcul CRC](assets/calcul_crc.png)
+![Construire une Trame](assets/constructModbus.png)
 
 ### 🔄 Communication temps réel avec Node-RED
-
 ![Node RED](assets/modbusflow1.png)
 ![Node RED](assets/noderedPOMP.png)
 ![Node RED](assets/noderedPoolController.png)
